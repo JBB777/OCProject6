@@ -1,12 +1,16 @@
 // Récupération des projets depuis l'API
-const response = await fetch('http://localhost:5678/api/works');
-const projects = await response.json();
+const projectsResponse = await fetch('http://localhost:5678/api/works');
+const projects = await projectsResponse.json();
+
+// Récupération des catégories depuis l'API
+const categoriesResponse = await fetch('http://localhost:5678/api/categories');
+const categories = await categoriesResponse.json();
 
 
 /* VARIABLES */
 
-const divGallery = document.querySelector(".gallery");
-
+const divGallery = document.querySelector(".gallery"); 
+const divFilters = document.querySelector(".filters");
 
 /* FUNCTIONS */
 
@@ -25,6 +29,18 @@ function displayProjects(projects) {
     }
 }
 
+/* Function to display filters buttons */
+function displayFilterButton (categories) {
+    for (let i = 0; i < categories.length; i++) {
+        let button = document.createElement("button");
+        button.textContent = categories[i].name;
+        let buttonClass = categories[i].name.toLowerCase();
+        const tabClass = buttonClass.split(" ");
+        button.classList.add("btn",`btn-${tabClass[0]}`);
+        divFilters.appendChild(button);
+    }
+}
+
 /* Function to update projects display */
 function upadteDisplayProjects (projects, btn) {
     document.querySelector(".gallery").innerHTML = "";
@@ -37,8 +53,9 @@ function upadteDisplayProjects (projects, btn) {
 
 /* METHOD */
 
-/* First display projects */
+/* First display projects & buttons */
 displayProjects(projects);
+displayFilterButton(categories);
 
 
 // Listener for a click on btn All
@@ -49,7 +66,7 @@ btnAll.addEventListener("click", function() {
 
 
 // Listener for a click on btn Objects
-const btnObjects = document.querySelector(".btn-objects");
+const btnObjects = document.querySelector(".btn-objets");
 btnObjects.addEventListener("click", function() {
     const projectsObjets = projects.filter(function (project) {
         if (project.categoryId == 1) {
@@ -75,7 +92,7 @@ btnAppartements.addEventListener("click", function() {
 
 
 // Listener for a click on btn Hotels & Restaurants
-const btnHotels = document.querySelector(".btn-hotels-restaurants");
+const btnHotels = document.querySelector(".btn-hotels");
 btnHotels.addEventListener("click", function() {
     const projectsHotels = projects.filter(function (project) {
         if (project.categoryId == 3) {

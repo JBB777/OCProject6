@@ -2,6 +2,7 @@
 const projectsResponse = await fetch('http://localhost:5678/api/works');
 const projects = await projectsResponse.json();
 
+
 // Récupération des catégories depuis l'API
 const categoriesResponse = await fetch('http://localhost:5678/api/categories');
 const categories = await categoriesResponse.json();
@@ -34,15 +35,14 @@ function displayFilterButton (categories) {
     for (let i = 0; i < categories.length; i++) {
         let button = document.createElement("button");
         button.textContent = categories[i].name;
-        let buttonClass = categories[i].name.toLowerCase();
-        const tabClass = buttonClass.split(" ");
-        button.classList.add("btn",`btn-${tabClass[0]}`);
+        button.dataset.categoryId = categories[i].id;
+        button.classList.add("btn");
         divFilters.appendChild(button);
     }
 }
 
 /* Function to update projects display */
-function upadteDisplayProjects (projects, btn) {
+function updateDisplayProjects (projects, btn) {
     document.querySelector(".gallery").innerHTML = "";
     let btnSelected = document.querySelector(".btn-selected");
     btnSelected.classList.remove("btn-selected");
@@ -58,47 +58,20 @@ displayProjects(projects);
 displayFilterButton(categories);
 
 
-// Listener for a click on btn All
-const btnAll = document.querySelector(".btn-all");
-btnAll.addEventListener("click", function() {
-    upadteDisplayProjects(projects, btnAll);
-});
-
-
-// Listener for a click on btn Objects
-const btnObjects = document.querySelector(".btn-objets");
-btnObjects.addEventListener("click", function() {
-    const projectsObjets = projects.filter(function (project) {
-        if (project.categoryId == 1) {
-            return project;
-        }
-    });
-    // Update display
-    upadteDisplayProjects(projectsObjets, btnObjects);
-});
-
-
-// Listener for a click on btn Appartements
-const btnAppartements = document.querySelector(".btn-appartements");
-btnAppartements.addEventListener("click", function() {
-    const projetsAppartements = projects.filter(function (project) {
-        if (project.categoryId == 2) {
-            return project;
-        }
-    });
-    // Update display
-    upadteDisplayProjects(projetsAppartements, btnAppartements);
-});
-
-
-// Listener for a click on btn Hotels & Restaurants
-const btnHotels = document.querySelector(".btn-hotels");
-btnHotels.addEventListener("click", function() {
-    const projectsHotels = projects.filter(function (project) {
-        if (project.categoryId == 3) {
-            return project;
-        }
-    });
-    // Update display
-    upadteDisplayProjects(projectsHotels, btnHotels);
-});
+/* Click on buttons */
+/* array of all buttons from filter div to use forEach (can use Array.from))*/
+[...divFilters.children].forEach(btn => {
+     btn.addEventListener("click", function() {
+         const projectsToDisplay = projects.filter(function (project) {
+            if (btn.dataset.categoryId == 0) {
+                return project
+            }
+            if (project.categoryId == btn.dataset.categoryId) {
+                return project;
+            }
+         });
+         
+         // Update display
+         updateDisplayProjects(projectsToDisplay, btn);
+     });
+ });

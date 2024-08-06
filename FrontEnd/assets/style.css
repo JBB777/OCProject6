@@ -52,6 +52,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -139,7 +140,7 @@ nav a {
 .btn {
 	border-color: #1D6154;
 	color: #1D6154;
-	background-color: palegoldenrod;
+	background-color:#FFFEF8;
 	border-radius: 25px;
 	padding: 0.5em 1em;
 	font-family: 'Syne';
@@ -207,9 +208,14 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+footer {
+	background-color: white;
+	height: 100px;
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin-top: 2em;
+	padding-top: 3em;
 }
-

@@ -57,6 +57,12 @@ function updateDisplayProjects (projects, btn) {
 displayProjects(projects);
 displayFilterButton(categories);
 
+// Hidding the filter buttons when connected
+if (window.localStorage.getItem("userToken") != null) {
+    divFilters.style.display = "none";
+}
+
+
 
 /* Click on buttons */
 /* array of all buttons from filter div to use forEach (can use Array.from))*/

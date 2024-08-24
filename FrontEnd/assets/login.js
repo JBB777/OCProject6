@@ -25,8 +25,7 @@ document.getElementById("formLogin").addEventListener('submit', async function(l
             error.innerHTML = "Utilisateur non trouvé";
             throw new Error("User not found");
         }
-            
-        console.log("Login possible pour Sophie");
+        
         const responseToken = await fetchResponse.json();
         window.localStorage.setItem("userToken", responseToken.token);
         window.location.href = "index.html";

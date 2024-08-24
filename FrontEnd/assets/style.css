@@ -131,11 +131,13 @@ nav a {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
 .filters {
-	display: flex;
+	display: grid;
 	justify-content: center;
-	column-gap: 2em;
 	margin-bottom: 3em;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 10px;
 }
 .btn {
 	border-color: #1D6154;
@@ -144,6 +146,7 @@ nav a {
 	border-radius: 25px;
 	padding: 0.5em 1em;
 	font-family: 'Syne';
+	height: 45px;
 }
 .btn-selected {
 	background-color: #1D6154;
@@ -155,6 +158,7 @@ nav a {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+	padding: 0 20px;
 }
 
 .gallery img {
@@ -303,7 +307,7 @@ footer nav ul {
 	width: 95%;
 	max-width:500px;
 	min-width: 300px;
-	height: 90vh;
+	max-height: 500px;
 	background-color: white;
 	font-size: 20px;
 	padding-top: 20px;
@@ -343,10 +347,16 @@ footer nav ul {
 
 .modal__gallery {
 	display: grid;
-	grid-template-columns: 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;
-	column-gap: 5px;
-	padding: 0 35px;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	gap: 5px;
+	padding: 0px 10px 0 35px;
 	overflow-y: scroll;
+}
+
+.modal-card {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
 }
 
 .modal-card img {
@@ -354,11 +364,10 @@ footer nav ul {
 }
 
 .modal-card button {
-	position: relative;
-	top: 20px;
-	left: 75%;
-	background-color: black;
-	border: none;
+	position: absolute;
+  	background-color: black;
+  	border: none;
+  	margin: 5px 5px 0px 0px;
 }
 
 .modal__content form {
@@ -366,12 +375,11 @@ footer nav ul {
 	flex-direction: column;
 	width: 90%;
 	padding-top: 20px;
-	row-gap: 10px;
+	row-gap: 5px;
 }
 
 .formFig {
 	border-radius: 5px;
-	width: 100%;
 	height: 200px;
 	display: flex;
 	flex-direction: column;
@@ -382,7 +390,6 @@ footer nav ul {
 
 .formFig label {
 	font-size: 10px;
-
 }
 
 .formFig i {
@@ -418,14 +425,19 @@ footer nav ul {
 
 #modal2 input[type="text"] {
 	width: 80%;
-	box-shadow: 0px 4px 14px 0px #00000017;
+	max-width: 345px;
+	min-width: 295px;
+	box-shadow: 0px 0px 10px 0px #00000017;
+	padding-left: 5px;
 }
 
 #modal2 select {
 	width: 80%;
+	max-width: 350px;
+	min-width: 300px;
   	background: white;
   	border: none;
- 	box-shadow: 0px 4px 14px 0px #00000017;
+ 	box-shadow: 0px 0px 10px 0px #00000017;
  	height: 35px;
 }
 
@@ -442,4 +454,29 @@ footer nav ul {
 
 #modal1 .submitBorder {
 	width: 90%;
+}
+
+#portfolio {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 15px;
+}
+
+
+
+
+
+@media all and (max-width: 600px) {
+	.gallery {
+		grid-template-columns: 1fr 1fr;
+	}
+	
+	.modal__gallery {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.filters {
+		grid-template-columns: 1fr 1fr;
+	}
 }

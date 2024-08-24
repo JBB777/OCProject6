@@ -49,7 +49,7 @@ function createEditModeBanner() {
 }
 
 
-//Remlpacement Login -> Logout, Logout -> Login
+//Remplacement Login -> Logout, Logout -> Login
 let headerNav = document.querySelector("header nav ul");
 let linkLogin = document.querySelector("header nav ul a");
 
@@ -77,11 +77,10 @@ const categories = await categoriesResponse.json();
 const inputSelect = document.querySelector("#modal2 select");
 for (let i = 0; i < categories.length; i++) {
     let option = document.createElement("option");
-    option.value = categories[i].name;
+    option.value = categories[i].id;
     option.textContent = categories[i].name;
     inputSelect.appendChild(option);
 }
-
 
 
 const modal1 = document.getElementById('modal1');
@@ -98,13 +97,20 @@ function toggleModal1(e) {
 
 function toggleModal2(e) {
     e.preventDefault();
+    restForm();
     modal2.classList.toggle("active");
 }
 
 
 // Gestion de l'affichage de l'image uploadée dans le formulaire d'ajout
-const photoUpload = document.getElementById("photoUpload");
-photoUpload.addEventListener('change', previewFile);
+const inputPhotoUpload = document.getElementById("photoUpload");
+inputPhotoUpload.addEventListener('change', previewFile);
+const photo = document.querySelector("#modal2 img");
+const figIcon = document.querySelector(".fa-image");
+const figBtn = document.querySelector(".btnFormAjout");
+const figLabel = document.querySelector(".formFig label");
+const formAjoutPhoto = document.getElementById("formAjoutPhoto");
+
 
 function previewFile() {
     const file = this.files[0]
@@ -113,14 +119,24 @@ function previewFile() {
     fileReader.addEventListener('load', (event) => displayPhoto(event, file));
 }
 
-function displayPhoto(event, file) {
-    const photo = document.querySelector("#modal2 img");
-    const input = document.querySelector("#modal2 figure input");
+function displayPhoto(event, file) {    
     photo.src = event.target.result;
     photo.classList.add("imgUpload");
-    input.style.display = "none";
+    figIcon.style.display = "none";
+    figBtn.style.display = "none";
+    figLabel.style.display = "none";
 }
 
+// Reset du formulaire
+function restForm() {
+    formAjoutPhoto.reset();
+    photo.src = "";
+    photo.classList.remove("imgUpload");
+    inputPhotoUpload.style.display = "block";
+    figIcon.style.display = "block";
+    figBtn.style.display = "block";
+    figLabel.style.display = "block";
+}
 
 
 const projectsResponse = await fetch('http://localhost:5678/api/works');
@@ -130,7 +146,7 @@ const modGallery = document.querySelector(".modal__gallery");
 // Affichage des projets dans la gallerie du modal
 for (let i = 0; i < projects.length; i++) {
     
-    let divPhoto = document.createElement("div");
+    let figPhoto = document.createElement("figure");
     let img = document.createElement("img");
     let btnSuppr = document.createElement("button");
     let btnIcon = document.createElement("i");
@@ -139,13 +155,16 @@ for (let i = 0; i < projects.length; i++) {
     img.alt = projects[i].title;
 
     btnIcon.classList.add("fa-regular", "fa-trash-can");
+    btnIcon.dataset.id = projects[i].id;
     btnSuppr.appendChild(btnIcon);
+    btnSuppr.dataset.id = projects[i].id;
+    btnSuppr.addEventListener("mouseover", function (event) { event.target.style.cursor = "pointer"});
 
-    divPhoto.classList.add("modal-card");
+    figPhoto.classList.add("modal-card");
 
-    divPhoto.appendChild(btnSuppr);
-    divPhoto.appendChild(img);
-    modGallery.appendChild(divPhoto);
+    figPhoto.appendChild(btnSuppr);
+    figPhoto.appendChild(img);
+    modGallery.appendChild(figPhoto);
 }
 
 
@@ -158,22 +177,62 @@ btnAjout.addEventListener("click", function(e) {
 });
 
 
-const formAjoutPhoto = document.getElementById("formAjoutPhoto");
-
-function restForm() {
-    formAjoutPhoto.reset();
-    const photo = document.querySelector("#modal2 img");
-    const input = document.querySelector("#modal2 figure input");
-    photo.src = "";
-    photo.classList.remove("imgUpload");
-    input.style.display = "block";
-
-}
-
 // Click pour revenir au premier modal depuis le deuxième
 const iconRetour = document.querySelector("#modal2 i");
 iconRetour.addEventListener("click", function(e) {
     toggleModal2(e);
     toggleModal1(e);
     restForm();
+});
+
+
+document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventListener("click", async function (supp) {
+    supp.preventDefault();
+    console.log(supp.target.dataset.id);
+    const id = supp.target.dataset.id;
+        const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}`}
+        });
+
+        if (suppResponse.status != 200) {
+            throw new Error("Erreur");
+        }
+
+        console.log(suppResponse.status);
+
+        window.location.href = "index.html";
+}));
+
+
+//Gestion du formulaire ajout d'une photo
+document.getElementById("formAjoutPhoto").addEventListener('submit', async function(ajout){
+    ajout.preventDefault();
+
+    try {
+
+        const img = document.getElementById("photoUpload").files[0];
+        const titre = document.getElementById("titre").value;
+        const idCategorie = parseInt(document.getElementById("categorie").value);
+
+        const formData = new FormData();
+        formData.append("image", img);
+        formData.append("title", titre);
+        formData.append("category", idCategorie);
+
+        const fetchResponseAjout = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers : { Authorization: `Bearer ${localStorage.getItem("userToken")}`},
+            body: formData,
+        });
+
+        if (fetchResponseAjout.status != 200) {
+            throw new Error("Erreur lors de l'upload !!");
+        }
+
+        window.location.href = "index.html";
+
+    } catch(error) {
+        console.error(error);
+    }
 });

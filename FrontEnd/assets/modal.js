@@ -1,3 +1,5 @@
+import {projects, categories }  from "./script.js"
+
 
 // Banner & button creation
 let body = document.querySelector("body");
@@ -70,10 +72,6 @@ if(window.localStorage.getItem("userToken") != null) {
 }
 
 
-// Récupération des catégories depuis l'API
-const categoriesResponse = await fetch('http://localhost:5678/api/categories');
-const categories = await categoriesResponse.json();
-
 const inputSelect = document.querySelector("#modal2 select");
 for (let i = 0; i < categories.length; i++) {
     let option = document.createElement("option");
@@ -113,7 +111,12 @@ const formAjoutPhoto = document.getElementById("formAjoutPhoto");
 
 
 function previewFile() {
-    const file = this.files[0]
+    const file = this.files[0];
+    if (file.size > 4194304) {
+        document.querySelector(".formFig label").style.color = "red";
+        document.querySelector(".formFig label").innerText = "La photo est trop volumineuse";
+        return;
+    }
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.addEventListener('load', (event) => displayPhoto(event, file));
@@ -138,9 +141,6 @@ function restForm() {
     figLabel.style.display = "block";
 }
 
-
-const projectsResponse = await fetch('http://localhost:5678/api/works');
-const projects =  await projectsResponse.json();
 
 const modGallery = document.querySelector(".modal__gallery");
 // Affichage des projets dans la gallerie du modal
@@ -186,28 +186,25 @@ iconRetour.addEventListener("click", function(e) {
 });
 
 
-document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventListener("click", async function (supp) {
-    supp.preventDefault();
-    console.log(supp.target.dataset.id);
-    const id = supp.target.dataset.id;
-        const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}`}
-        });
+document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventListener("click", async function (event) {
+    event.preventDefault();
+    const id = event.target.dataset.id;
+    const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
+         method: "DELETE",
+        headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}`}
+    });
 
-        if (suppResponse.status != 200) {
-            throw new Error("Erreur");
-        }
+    if (suppResponse.status != 200) {
+        throw new Error("Erreur");
+    }
 
-        console.log(suppResponse.status);
-
-        window.location.href = "index.html";
+    window.location.href = "index.html";
 }));
 
 
 //Gestion du formulaire ajout d'une photo
-document.getElementById("formAjoutPhoto").addEventListener('submit', async function(ajout){
-    ajout.preventDefault();
+document.getElementById("formAjoutPhoto").addEventListener('submit', async function(event){
+    event.preventDefault();
 
     try {
 
@@ -236,3 +233,26 @@ document.getElementById("formAjoutPhoto").addEventListener('submit', async funct
         console.error(error);
     }
 });
+
+// Boutton validation formulaire d'ajout Enabled/Disabled
+const img = document.getElementById("photoUpload");
+const titre = document.getElementById("titre");
+const btnValidate = document.querySelector(".btnValidate");
+btnValidate.disabled = true;
+
+img.onblur = () => {
+    if ((img.files[0] == "") || (titre.value == "")) {
+        btnValidate.disabled = true;
+    }
+    else {
+        btnValidate.disabled = false;
+    }
+}
+titre.onblur = () => {
+    if ((img.files[0] == "") || (titre.value == "")) {
+        btnValidate.disabled = true;
+    }
+    else {
+        btnValidate.disabled = false;
+    }
+}

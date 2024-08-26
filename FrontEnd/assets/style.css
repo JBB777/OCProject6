@@ -441,8 +441,13 @@ footer nav ul {
  	height: 35px;
 }
 
-#modal2 input[type="submit"] {
+#modal2 input[type="submit"]:disabled {
 	background-color: grey;
+	box-shadow: none;
+}
+
+#modal2 input[type="submit"] {
+	background-color: #1D6154;
 	box-shadow: none;
 }
 

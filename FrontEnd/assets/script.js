@@ -81,3 +81,8 @@ if (window.localStorage.getItem("userToken") != null) {
          updateDisplayProjects(projectsToDisplay, btn);
      });
  });
+
+
+ export {
+    projects, categories
+ }

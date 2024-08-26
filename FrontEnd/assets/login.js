@@ -22,7 +22,7 @@ document.getElementById("formLogin").addEventListener('submit', async function(l
             throw new Error("MdP incorrect");
         }
         if (fetchResponse.status == 404) {
-            error.innerHTML = "Utilisateur non trouvé";
+            error.innerHTML = "Adresse mail incorrect";
             throw new Error("User not found");
         }
         

@@ -1,7 +1,7 @@
 import {projects, categories }  from "./script.js"
 
 
-// Banner & button creation
+// Banner & buttons creation
 let body = document.querySelector("body");
 
 function createEditModeBanner() {
@@ -72,6 +72,7 @@ if(window.localStorage.getItem("userToken") != null) {
 }
 
 
+// Option choices for the adding project form in the second modal
 const inputSelect = document.querySelector("#modal2 select");
 for (let i = 0; i < categories.length; i++) {
     let option = document.createElement("option");
@@ -119,10 +120,10 @@ function previewFile() {
     }
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
-    fileReader.addEventListener('load', (event) => displayPhoto(event, file));
+    fileReader.addEventListener('load', (event) => displayPhoto(event));
 }
 
-function displayPhoto(event, file) {    
+function displayPhoto(event) {    
     photo.src = event.target.result;
     photo.classList.add("imgUpload");
     figIcon.style.display = "none";
@@ -197,6 +198,11 @@ document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventL
     if (suppResponse.status != 200) {
         console.error("Erreur: " + suppResponse.status);
     }
+
+    btn.parentElement.remove();
+    let figToSupp = document.querySelector(`.gallery [data-id="${id}"]`);
+    figToSupp.remove();
+    
 }));
 
 

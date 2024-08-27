@@ -19,6 +19,7 @@ const divFilters = document.querySelector(".filters");
 function displayProjects(projects) {
     for (let i = 0; i < projects.length; i++) {
         let figure = document.createElement("figure");
+        figure.dataset.id = projects[i].id;
         let img = document.createElement("img");
         img.src = projects[i].imageUrl;
         img.alt = projects[i].title;

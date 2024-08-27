@@ -105,7 +105,7 @@ const inputPhotoUpload = document.getElementById("photoUpload");
 inputPhotoUpload.addEventListener('change', previewFile);
 const photo = document.querySelector("#modal2 img");
 const figIcon = document.querySelector(".fa-image");
-const figBtn = document.querySelector(".btnFormAjout");
+const figBtn = document.querySelector(".btnFormAddPhoto");
 const figLabel = document.querySelector(".formFig label");
 const formAjoutPhoto = document.getElementById("formAjoutPhoto");
 
@@ -160,7 +160,7 @@ for (let i = 0; i < projects.length; i++) {
     btnSuppr.dataset.id = projects[i].id;
     btnSuppr.addEventListener("mouseover", function (event) { event.target.style.cursor = "pointer"});
 
-    figPhoto.classList.add("modal-card");
+    figPhoto.classList.add("modal__card");
 
     figPhoto.appendChild(btnSuppr);
     figPhoto.appendChild(img);
@@ -190,15 +190,13 @@ document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventL
     event.preventDefault();
     const id = event.target.dataset.id;
     const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
-         method: "DELETE",
+        method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}`}
     });
 
     if (suppResponse.status != 200) {
-        throw new Error("Erreur");
+        console.error("Erreur: " + suppResponse.status);
     }
-
-    window.location.href = "index.html";
 }));
 
 
@@ -223,12 +221,14 @@ document.getElementById("formAjoutPhoto").addEventListener('submit', async funct
             body: formData,
         });
 
-        if (fetchResponseAjout.status != 200) {
-            throw new Error("Erreur lors de l'upload !!");
+        if (fetchResponseAjout.status != 201) {
+            throw new Error("Erreur lors de l'upload !!" + fetchResponseAjout.status);
         }
 
-        window.location.href = "index.html";
-
+        //window.location.href = "index.html";
+        toggleModal2(event);
+        toggleModal1(event);
+        
     } catch(error) {
         console.error(error);
     }
@@ -241,7 +241,7 @@ const btnValidate = document.querySelector(".btnValidate");
 btnValidate.disabled = true;
 
 img.onblur = () => {
-    if ((img.files[0] == "") || (titre.value == "")) {
+    if ((img.files[0] == null) || (titre.value.trim() == "")) {
         btnValidate.disabled = true;
     }
     else {
@@ -249,7 +249,7 @@ img.onblur = () => {
     }
 }
 titre.onblur = () => {
-    if ((img.files[0] == "") || (titre.value == "")) {
+    if ((img.files[0] == null) || (titre.value.trim() == "")) {
         btnValidate.disabled = true;
     }
     else {

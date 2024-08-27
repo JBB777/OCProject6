@@ -1,0 +1,298 @@
+/*************/
+/*** LOGIN ***/
+/*************/
+
+#login {
+	width: 50%;
+	margin: auto;
+	padding-bottom: 150px;
+    h2{
+	    margin-bottom: 20px;
+    }
+    form {
+        text-align: left;
+        margin-top:30px;
+        display: flex;
+        flex-direction: column;
+    }
+    input {
+        height: 50px;
+        font-size: 1.2em;
+        border: none;
+        box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+        
+        &[type="submit"] {
+            cursor: pointer;
+        }
+    }
+    label {
+        margin: 2em 0 1em 0;
+    }
+    span {
+        margin-top: 20px;
+    }
+    a {
+        text-align: center;
+        text-decoration: underline;
+    }
+}
+
+#login > * {
+	text-align: center;
+}
+
+
+
+/*************/
+/*** INDEX ***/
+/*************/
+
+// Black banner at the top of the page
+// Only in when admin is connected
+.banner-edit {
+	background-color: black;
+	width: 100%;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+}
+
+
+
+
+// In "Portfolio" section
+// Replace the title to add the icon button 
+.div__title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+
+
+
+/*************/
+/*** MODAL ***/
+/*************/
+
+.modal {
+	position: fixed;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	visibility: hidden;
+
+    &.active {
+        visibility: visible;    
+    }
+    
+    //Modal background
+    &__bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    // Modal container
+    &__content {
+        position: relative;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 95%;
+        max-width:500px;
+        min-width: 300px;
+        max-height: 500px;
+        background-color: white;
+        font-size: 20px;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 10px;
+
+        input {
+            border: none;
+            padding: 10px 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            padding-top: 20px;
+            row-gap: 5px;
+        }
+    }
+
+    // Gallery of projects on the first modal
+    &__gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 5px;
+        padding: 0px 10px 0 35px;
+        overflow-y: scroll;
+    }
+
+    &__card {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-end;
+
+        & img {
+            width: 100%;
+        }
+        
+        & button {
+            position: absolute;
+            background-color: black;
+            border: none;
+            margin: 5px 5px 0px 0px;
+        }
+    }
+
+}
+
+
+
+// First Modal
+#modal1 {
+
+    // Garbage icon
+    i {
+        color: white;
+    }
+    .submitBorder {
+        width: 90%;
+    }
+}
+
+
+// Second Modal
+#modal2 {
+
+    // Arrow left icon to go back to the first modal
+    .fa-arrow-left {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+    }
+
+    input[type="text"] {
+        width: 80%;
+        max-width: 345px;
+        min-width: 295px;
+        box-shadow: 0px 0px 10px 0px #00000017;
+        padding-left: 5px;
+    }
+    
+    select {
+        width: 80%;
+        max-width: 350px;
+        min-width: 300px;
+        background: white;
+        border: none;
+        box-shadow: 0px 0px 10px 0px #00000017;
+        height: 35px;
+    }
+    
+    input[type="submit"]:disabled {
+        background-color: grey;
+        box-shadow: none;
+    }
+    
+    input[type="submit"] {
+        background-color: #1D6154;
+        box-shadow: none;
+    }
+}
+
+
+// X button to close modal
+.btn-close-modal {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 15px;
+	border: none;
+	padding: 5px 10px;
+	background: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+// First field of the form
+.formFig {
+	border-radius: 5px;
+	height: 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: #E8F1F6;
+    
+    label {
+        font-size: 10px;
+    }
+
+    i {
+        color: #B9C5CC;
+        font-size: 75px;
+    }
+}
+
+// Button use to mask the input type file needed to upload a photo
+.btnFormAddPhoto {
+	position: relative;
+	width: 35%;
+	background: #B9C5CC;
+	border: none;
+	border-radius: 20px;
+	padding: 10px;
+	color: #306685;
+	margin: 10px 0;
+}
+
+// Input type file to upload photo
+#photoUpload {
+	display: block;
+	opacity: 0;
+	position: absolute;
+	inset: 0;
+	cursor: pointer;
+  	border-radius: 20px;
+}
+
+// Use to display the photo on the field
+.imgUpload {
+	width: 100%;
+  	height: 100%;
+  	object-fit: contain;
+}
+
+// Grey border in modals
+.submitBorder {
+	text-align: center;
+	margin-top: 15px;
+	border-top: 1px solid #B3B3B3
+}
+
+
+@media all and (max-width: 600px) {
+	.gallery {
+		grid-template-columns: 1fr 1fr;
+	}
+	
+	.modal__gallery {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.filters {
+		grid-template-columns: 1fr 1fr;
+	}
+}

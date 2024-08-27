@@ -1,0 +1,241 @@
+/*************/
+/*** LOGIN ***/
+/*************/
+#login {
+  width: 50%;
+  margin: auto;
+  padding-bottom: 150px;
+}
+#login h2 {
+  margin-bottom: 20px;
+}
+#login form {
+  text-align: left;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+#login input {
+  height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login input[type=submit] {
+  cursor: pointer;
+}
+#login label {
+  margin: 2em 0 1em 0;
+}
+#login span {
+  margin-top: 20px;
+}
+#login a {
+  text-align: center;
+  text-decoration: underline;
+}
+
+#login > * {
+  text-align: center;
+}
+
+/*************/
+/*** INDEX ***/
+/*************/
+.banner-edit {
+  background-color: black;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.div__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/*************/
+/*** MODAL ***/
+/*************/
+.modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  visibility: hidden;
+}
+.modal.active {
+  visibility: visible;
+}
+.modal__bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+.modal__content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  max-width: 500px;
+  min-width: 300px;
+  max-height: 500px;
+  background-color: white;
+  font-size: 20px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+.modal__content input {
+  border: none;
+  padding: 10px 0;
+}
+.modal__content form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding-top: 20px;
+  row-gap: 5px;
+}
+.modal__gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 5px;
+  padding: 0px 10px 0 35px;
+  overflow-y: scroll;
+}
+.modal__card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.modal__card img {
+  width: 100%;
+}
+.modal__card button {
+  position: absolute;
+  background-color: black;
+  border: none;
+  margin: 5px 5px 0px 0px;
+}
+
+#modal1 i {
+  color: white;
+}
+#modal1 .submitBorder {
+  width: 90%;
+}
+
+#modal2 .fa-arrow-left {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+}
+#modal2 input[type=text] {
+  width: 80%;
+  max-width: 345px;
+  min-width: 295px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.0901960784);
+  padding-left: 5px;
+}
+#modal2 select {
+  width: 80%;
+  max-width: 350px;
+  min-width: 300px;
+  background: white;
+  border: none;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.0901960784);
+  height: 35px;
+}
+#modal2 input[type=submit]:disabled {
+  background-color: grey;
+  box-shadow: none;
+}
+#modal2 input[type=submit] {
+  background-color: #1D6154;
+  box-shadow: none;
+}
+
+.btn-close-modal {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
+  border: none;
+  padding: 5px 10px;
+  background: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.formFig {
+  border-radius: 5px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #E8F1F6;
+}
+.formFig label {
+  font-size: 10px;
+}
+.formFig i {
+  color: #B9C5CC;
+  font-size: 75px;
+}
+
+.btnFormAddPhoto {
+  position: relative;
+  width: 35%;
+  background: #B9C5CC;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  color: #306685;
+  margin: 10px 0;
+}
+
+#photoUpload {
+  display: block;
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.imgUpload {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.submitBorder {
+  text-align: center;
+  margin-top: 15px;
+  border-top: 1px solid #B3B3B3;
+}
+
+@media all and (max-width: 600px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+  .modal__gallery {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+}

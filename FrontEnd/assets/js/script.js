@@ -59,7 +59,7 @@ displayProjects(projects);
 displayFilterButton(categories);
 
 // Hidding the filter buttons when connected
-if (window.localStorage.getItem("userToken") != null) {
+if (window.sessionStorage.getItem("userToken") != null) {
     divFilters.style.display = "none";
 }
 
@@ -85,5 +85,5 @@ if (window.localStorage.getItem("userToken") != null) {
 
 
  export {
-    projects, categories
+    projects, categories, divGallery
  }

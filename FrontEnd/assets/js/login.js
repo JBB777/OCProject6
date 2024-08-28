@@ -27,7 +27,7 @@ document.getElementById("formLogin").addEventListener('submit', async function(l
         }
         
         const responseToken = await fetchResponse.json();
-        window.localStorage.setItem("userToken", responseToken.token);
+        window.sessionStorage.setItem("userToken", responseToken.token);
         window.location.href = "index.html";
 
     } catch (err) {        

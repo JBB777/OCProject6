@@ -1,4 +1,4 @@
-import {projects, categories }  from "./script.js"
+import {projects, categories, divGallery }  from "./script.js"
 
 
 // Banner & buttons creation
@@ -55,7 +55,7 @@ function createEditModeBanner() {
 let headerNav = document.querySelector("header nav ul");
 let linkLogin = document.querySelector("header nav ul a");
 
-if(window.localStorage.getItem("userToken") != null) {
+if(window.sessionStorage.getItem("userToken") != null) {
 
     createEditModeBanner();
 
@@ -67,7 +67,7 @@ if(window.localStorage.getItem("userToken") != null) {
     headerNav.replaceChild(linkLogout, linkLogin);
     
     linkLogout.addEventListener("click", function() {
-        window.localStorage.removeItem("userToken");
+        window.sessionStorage.removeItem("userToken");
     });
 }
 
@@ -115,6 +115,7 @@ function previewFile() {
     const file = this.files[0];
     if (file.size > 4194304) {
         document.querySelector(".formFig label").style.color = "red";
+        document.querySelector(".formFig label").style.fontWeight = "bold";
         document.querySelector(".formFig label").innerText = "La photo est trop volumineuse";
         return;
     }
@@ -192,13 +193,14 @@ document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventL
     const id = event.target.dataset.id;
     const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("userToken")}`}
+        headers: { Authorization: `Bearer ${sessionStorage.getItem("userToken")}`}
     });
 
     if (suppResponse.status != 200) {
-        console.error("Erreur: " + suppResponse.status);
+        console.error(suppResponse.status);
     }
 
+    // Remove items in the two gallery (projects and first modal) without reloading
     btn.parentElement.remove();
     let figToSupp = document.querySelector(`.gallery [data-id="${id}"]`);
     figToSupp.remove();
@@ -223,15 +225,16 @@ document.getElementById("formAjoutPhoto").addEventListener('submit', async funct
 
         const fetchResponseAjout = await fetch("http://localhost:5678/api/works", {
             method: "POST",
-            headers : { Authorization: `Bearer ${localStorage.getItem("userToken")}`},
+            headers : { Authorization: `Bearer ${sessionStorage.getItem("userToken")}`},
             body: formData,
-        });
+        });        
 
         if (fetchResponseAjout.status != 201) {
             throw new Error("Erreur lors de l'upload !!" + fetchResponseAjout.status);
         }
 
-        //window.location.href = "index.html";
+        previewFileGalleries(img, titre);
+
         toggleModal2(event);
         toggleModal1(event);
         
@@ -240,7 +243,49 @@ document.getElementById("formAjoutPhoto").addEventListener('submit', async funct
     }
 });
 
-// Boutton validation formulaire d'ajout Enabled/Disabled
+// Gestion de l'affichage de l'image ajoutée dans les galleries
+function previewFileGalleries(file, title) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.addEventListener('load', (event) => displayPhotoGalleries(event, title));
+}
+
+function displayPhotoGalleries(event, title) {    
+
+    // First gallery
+    let figure = document.createElement("figure");
+    let img = document.createElement("img");
+    img.src = event.target.result;
+    img.alt = title;
+    let figcaption = document.createElement("figcaption");
+    figcaption.textContent = title;
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    divGallery.appendChild(figure);
+
+    // Second Gallery
+    let figPhoto = document.createElement("figure");
+    let image = document.createElement("img");
+    let btnSuppr = document.createElement("button");
+    let btnIcon = document.createElement("i");
+
+    image.src = event.target.result;
+    image.alt = title;
+
+    btnIcon.classList.add("fa-regular", "fa-trash-can");
+    btnSuppr.appendChild(btnIcon);
+    btnSuppr.addEventListener("mouseover", function (event) { event.target.style.cursor = "pointer"});
+
+    figPhoto.classList.add("modal__card");
+
+    figPhoto.appendChild(btnSuppr);
+    figPhoto.appendChild(image);
+    modGallery.appendChild(figPhoto);
+
+}
+
+
+// Accessibilité bouton validation formulaire d'ajout
 const img = document.getElementById("photoUpload");
 const titre = document.getElementById("titre");
 const btnValidate = document.querySelector(".btnValidate");

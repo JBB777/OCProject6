@@ -114,9 +114,9 @@ const formAjoutPhoto = document.getElementById("formAjoutPhoto");
 function previewFile() {
     const file = this.files[0];
     if (file.size > 4194304) {
-        document.querySelector(".formFig label").style.color = "red";
-        document.querySelector(".formFig label").style.fontWeight = "bold";
-        document.querySelector(".formFig label").innerText = "La photo est trop volumineuse";
+        figLabel.style.color = "red";
+        figLabel.style.fontWeight = "bold";
+        figLabel.innerText = "La photo est trop volumineuse";
         return;
     }
     const fileReader = new FileReader();
@@ -141,6 +141,9 @@ function restForm() {
     figIcon.style.display = "block";
     figBtn.style.display = "block";
     figLabel.style.display = "block";
+    figLabel.style.color = "black";
+    figLabel.style.fontWeight = "normal";
+    figLabel.innerText = "jpg, jpeg, png : 4mo max";
 }
 
 

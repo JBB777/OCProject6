@@ -57,7 +57,7 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
 }
 section {
 	margin: 50px 0
@@ -132,6 +132,7 @@ nav a {
 	flex-direction: column;
 	align-items: center;
 	padding: 0 15px;
+	margin-top: 120px;
 }
 #portfolio h2 {
 	text-align: center;
@@ -139,10 +140,9 @@ nav a {
 }
 
 .filters {
-	display: grid;
+	display: flex;
 	justify-content: center;
 	margin-bottom: 3em;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
 	gap: 10px;
 }
 .btn {
@@ -150,7 +150,7 @@ nav a {
 	color: #1D6154;
 	background-color:#FFFEF8;
 	border-radius: 25px;
-	padding: 0.5em 1em;
+	padding: 0px 20px;
 	font-family: 'Syne';
 	height: 45px;
 }
@@ -162,9 +162,10 @@ nav a {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-column-gap: 18px;
+	grid-row-gap: 23px;
 	padding: 0 20px;
+	margin-top: 65px;
 }
 
 .gallery img {

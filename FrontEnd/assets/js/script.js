@@ -15,19 +15,24 @@ const divFilters = document.querySelector(".filters");
 
 /* FUNCTIONS */
 
-/* Function to display projects */
-function displayProjects(projects) {
-    for (let i = 0; i < projects.length; i++) {
-        let figure = document.createElement("figure");
-        figure.dataset.id = projects[i].id;
+// Function to display one project
+function displayProject(id, imageUrl, title) {
+    let figure = document.createElement("figure");
+        figure.dataset.id = id;
         let img = document.createElement("img");
-        img.src = projects[i].imageUrl;
-        img.alt = projects[i].title;
+        img.src = imageUrl;
+        img.alt = title;
         let figcaption = document.createElement("figcaption");
-        figcaption.textContent = projects[i].title;
+        figcaption.textContent = title;
         figure.appendChild(img);
         figure.appendChild(figcaption);
         divGallery.appendChild(figure);
+}
+
+/* Function to display all projects */
+function displayProjects(projects) {
+    for (let i = 0; i < projects.length; i++) {
+        displayProject(projects[i].id, projects[i].imageUrl, projects[i].title);
     }
 }
 
@@ -85,5 +90,5 @@ if (window.sessionStorage.getItem("userToken") != null) {
 
 
  export {
-    projects, categories, divGallery
+    projects, categories, divGallery, displayProject
  }

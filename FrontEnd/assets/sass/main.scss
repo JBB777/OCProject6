@@ -51,15 +51,12 @@
 // Only in when admin is connected
 .banner-edit {
 	background-color: black;
-	width: 100%;
-	height: 30px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 15px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
 }
-
-
 
 
 // In "Portfolio" section
@@ -106,9 +103,7 @@
         width: 95%;
         max-width:500px;
         min-width: 300px;
-        max-height: 500px;
         background-color: white;
-        font-size: 20px;
         padding-top: 20px;
         display: flex;
         flex-direction: column;
@@ -123,19 +118,25 @@
         form {
             display: flex;
             flex-direction: column;
-            width: 90%;
+            width: 70%;
             padding-top: 20px;
-            row-gap: 5px;
+            row-gap: 15px;
         }
+    }
+
+    &__title {
+        margin-top: 20px;
     }
 
     // Gallery of projects on the first modal
     &__gallery {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        gap: 5px;
+        gap: 15px 5px;
         padding: 0px 10px 0 35px;
         overflow-y: scroll;
+        width: 70%;
+        margin-top: 20px;
     }
 
     &__card {
@@ -143,18 +144,28 @@
         align-items: flex-start;
         justify-content: flex-end;
 
-        & img {
+        img {
             width: 100%;
         }
+
+        i {
+            font-size: 10px;
+        }
         
-        & button {
+        button {
             position: absolute;
             background-color: black;
             border: none;
-            margin: 5px 5px 0px 0px;
+            margin: 3px 3px 0px 0px;
+            width: 17px;
+            height: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            cursor: pointer;
         }
     }
-
 }
 
 
@@ -167,7 +178,7 @@
         color: white;
     }
     .submitBorder {
-        width: 90%;
+        width: 70%;
     }
 }
 
@@ -184,21 +195,22 @@
     }
 
     input[type="text"] {
-        width: 80%;
         max-width: 345px;
         min-width: 295px;
         box-shadow: 0px 0px 10px 0px #00000017;
-        padding-left: 5px;
+        padding-left: 15px;
+        font-family: "Work Sans";
     }
     
     select {
-        width: 80%;
         max-width: 350px;
         min-width: 300px;
         background: white;
         border: none;
         box-shadow: 0px 0px 10px 0px #00000017;
         height: 35px;
+        padding-left: 15px;
+        font-family: "Work Sans";
     }
     
     input[type="submit"]:disabled {
@@ -216,14 +228,13 @@
 // X button to close modal
 .btn-close-modal {
 	position: absolute;
-	top: 5px;
-	right: 5px;
-	font-size: 15px;
+	top: 20px;
+	right: 25px;
 	border: none;
-	padding: 5px 10px;
 	background: none;
 	cursor: pointer;
-	font-weight: bold;
+    font-size: 10px;
+    font-weight: bold;
 }
 
 // First field of the form
@@ -235,6 +246,7 @@
 	align-items: center;
 	justify-content: center;
 	background-color: #E8F1F6;
+    margin-bottom: 10px;
     
     label {
         font-size: 10px;
@@ -278,7 +290,11 @@
 .submitBorder {
 	text-align: center;
 	margin-top: 15px;
-	border-top: 1px solid #B3B3B3
+	border-top: 1px solid #B3B3B3;
+
+    input {
+        padding: 4px 0;
+    }
 }
 
 

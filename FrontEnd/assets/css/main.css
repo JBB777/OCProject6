@@ -44,8 +44,7 @@
 /*************/
 .banner-edit {
   background-color: black;
-  width: 100%;
-  height: 30px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,9 +85,7 @@
   width: 95%;
   max-width: 500px;
   min-width: 300px;
-  max-height: 500px;
   background-color: white;
-  font-size: 20px;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
@@ -102,16 +99,21 @@
 .modal__content form {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 70%;
   padding-top: 20px;
-  row-gap: 5px;
+  row-gap: 15px;
+}
+.modal__title {
+  margin-top: 20px;
 }
 .modal__gallery {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 15px 5px;
   padding: 0px 10px 0 35px;
   overflow-y: scroll;
+  width: 70%;
+  margin-top: 20px;
 }
 .modal__card {
   display: flex;
@@ -121,18 +123,28 @@
 .modal__card img {
   width: 100%;
 }
+.modal__card i {
+  font-size: 10px;
+}
 .modal__card button {
   position: absolute;
   background-color: black;
   border: none;
-  margin: 5px 5px 0px 0px;
+  margin: 3px 3px 0px 0px;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
 #modal1 i {
   color: white;
 }
 #modal1 .submitBorder {
-  width: 90%;
+  width: 70%;
 }
 
 #modal2 .fa-arrow-left {
@@ -142,20 +154,21 @@
   cursor: pointer;
 }
 #modal2 input[type=text] {
-  width: 80%;
   max-width: 345px;
   min-width: 295px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.0901960784);
-  padding-left: 5px;
+  padding-left: 15px;
+  font-family: "Work Sans";
 }
 #modal2 select {
-  width: 80%;
   max-width: 350px;
   min-width: 300px;
   background: white;
   border: none;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.0901960784);
   height: 35px;
+  padding-left: 15px;
+  font-family: "Work Sans";
 }
 #modal2 input[type=submit]:disabled {
   background-color: grey;
@@ -168,13 +181,12 @@
 
 .btn-close-modal {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 15px;
+  top: 20px;
+  right: 25px;
   border: none;
-  padding: 5px 10px;
   background: none;
   cursor: pointer;
+  font-size: 10px;
   font-weight: bold;
 }
 
@@ -186,6 +198,7 @@
   align-items: center;
   justify-content: center;
   background-color: #E8F1F6;
+  margin-bottom: 10px;
 }
 .formFig label {
   font-size: 10px;
@@ -216,7 +229,6 @@
 }
 
 .imgUpload {
-  width: 100%;
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
@@ -226,6 +238,9 @@
   text-align: center;
   margin-top: 15px;
   border-top: 1px solid #B3B3B3;
+}
+.submitBorder input {
+  padding: 4px 0;
 }
 
 @media all and (max-width: 600px) {

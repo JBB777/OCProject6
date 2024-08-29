@@ -1,4 +1,4 @@
-import {projects, categories, divGallery }  from "./script.js"
+import {projects, categories, divGallery, displayProject }  from "./script.js"
 
 
 // Banner & buttons creation
@@ -51,7 +51,7 @@ function createEditModeBanner() {
 }
 
 
-//Remplacement Login -> Logout, Logout -> Login
+// Replace Login -> Logout, Logout -> Login
 let headerNav = document.querySelector("header nav ul");
 let linkLogin = document.querySelector("header nav ul a");
 
@@ -82,6 +82,7 @@ for (let i = 0; i < categories.length; i++) {
 }
 
 
+// Switch opened modal
 const modal1 = document.getElementById('modal1');
 const modal2 = document. getElementById('modal2');
 const modTriggers1 = document.querySelectorAll(".modal-trigger");
@@ -96,12 +97,12 @@ function toggleModal1(e) {
 
 function toggleModal2(e) {
     e.preventDefault();
-    restForm();
+    resetForm();
     modal2.classList.toggle("active");
 }
 
 
-// Gestion de l'affichage de l'image uploadée dans le formulaire d'ajout
+// Preview of the photo choose in the form to add a project
 const inputPhotoUpload = document.getElementById("photoUpload");
 inputPhotoUpload.addEventListener('change', previewFile);
 const photo = document.querySelector("#modal2 img");
@@ -132,8 +133,8 @@ function displayPhoto(event) {
     figLabel.style.display = "none";
 }
 
-// Reset du formulaire
-function restForm() {
+// Clean add project form
+function resetForm() {
     formAjoutPhoto.reset();
     photo.src = "";
     photo.classList.remove("imgUpload");
@@ -147,33 +148,44 @@ function restForm() {
 }
 
 
+
 const modGallery = document.querySelector(".modal__gallery");
-// Affichage des projets dans la gallerie du modal
-for (let i = 0; i < projects.length; i++) {
-    
+
+// Function to display one project in the modal gallery
+function displayModalProject(id, imageUrl, title) {
     let figPhoto = document.createElement("figure");
     let img = document.createElement("img");
     let btnSuppr = document.createElement("button");
     let btnIcon = document.createElement("i");
 
-    img.src = projects[i].imageUrl;
-    img.alt = projects[i].title;
+    img.src = imageUrl;
+    img.alt = title;
 
     btnIcon.classList.add("fa-regular", "fa-trash-can");
-    btnIcon.dataset.id = projects[i].id;
+    btnIcon.dataset.id = id;
     btnSuppr.appendChild(btnIcon);
-    btnSuppr.dataset.id = projects[i].id;
-    btnSuppr.addEventListener("mouseover", function (event) { event.target.style.cursor = "pointer"});
+    btnSuppr.dataset.id = id;
 
     figPhoto.classList.add("modal__card");
 
     figPhoto.appendChild(btnSuppr);
     figPhoto.appendChild(img);
     modGallery.appendChild(figPhoto);
+
+    // Event to remove a project on click
+    btnSuppr.addEventListener("click", async function (event) {
+        event.preventDefault();
+        suppressionPhoto(id, btnSuppr);
+    });
+}
+
+// Display all project in the modal gallery
+for (let i = 0; i < projects.length; i++) {
+    displayModalProject( projects[i].id, projects[i].imageUrl, projects[i].title);
 }
 
 
-// Click pour aller au deuxième modal via le bouton du premier
+// Going to the second modal from the first
 const btnAjout = document.querySelector(".modal__content input");
 btnAjout.addEventListener("click", function(e) {
     toggleModal1(e);
@@ -182,18 +194,16 @@ btnAjout.addEventListener("click", function(e) {
 });
 
 
-// Click pour revenir au premier modal depuis le deuxième
+// Go back to the first modal via the arrow lef in the second
 const iconRetour = document.querySelector("#modal2 i");
 iconRetour.addEventListener("click", function(e) {
     toggleModal2(e);
     toggleModal1(e);
-    restForm();
 });
 
 
-document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventListener("click", async function (event) {
-    event.preventDefault();
-    const id = event.target.dataset.id;
+// Function to remove a project
+async function suppressionPhoto(id, btn) {
     const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${sessionStorage.getItem("userToken")}`}
@@ -207,11 +217,10 @@ document.querySelectorAll(".modal__gallery button").forEach(btn => btn.addEventL
     btn.parentElement.remove();
     let figToSupp = document.querySelector(`.gallery [data-id="${id}"]`);
     figToSupp.remove();
-    
-}));
+}
 
 
-//Gestion du formulaire ajout d'une photo
+// Form submit to add a project
 document.getElementById("formAjoutPhoto").addEventListener('submit', async function(event){
     event.preventDefault();
 
@@ -230,13 +239,15 @@ document.getElementById("formAjoutPhoto").addEventListener('submit', async funct
             method: "POST",
             headers : { Authorization: `Bearer ${sessionStorage.getItem("userToken")}`},
             body: formData,
-        });        
+        });
 
         if (fetchResponseAjout.status != 201) {
             throw new Error("Erreur lors de l'upload !!" + fetchResponseAjout.status);
         }
 
-        previewFileGalleries(img, titre);
+        const objectFetch = await fetchResponseAjout.json();
+
+        previewFileGalleries( objectFetch.id, objectFetch.imageUrl, objectFetch.title);
 
         toggleModal2(event);
         toggleModal1(event);
@@ -246,45 +257,15 @@ document.getElementById("formAjoutPhoto").addEventListener('submit', async funct
     }
 });
 
-// Gestion de l'affichage de l'image ajoutée dans les galleries
-function previewFileGalleries(file, title) {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.addEventListener('load', (event) => displayPhotoGalleries(event, title));
-}
 
-function displayPhotoGalleries(event, title) {    
+// Gestion de l'affichage de l'image ajoutée dans les galleries
+function  previewFileGalleries(id, imageUrl, title) {    
 
     // First gallery
-    let figure = document.createElement("figure");
-    let img = document.createElement("img");
-    img.src = event.target.result;
-    img.alt = title;
-    let figcaption = document.createElement("figcaption");
-    figcaption.textContent = title;
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    divGallery.appendChild(figure);
+    displayProject(id, imageUrl, title);
 
     // Second Gallery
-    let figPhoto = document.createElement("figure");
-    let image = document.createElement("img");
-    let btnSuppr = document.createElement("button");
-    let btnIcon = document.createElement("i");
-
-    image.src = event.target.result;
-    image.alt = title;
-
-    btnIcon.classList.add("fa-regular", "fa-trash-can");
-    btnSuppr.appendChild(btnIcon);
-    btnSuppr.addEventListener("mouseover", function (event) { event.target.style.cursor = "pointer"});
-
-    figPhoto.classList.add("modal__card");
-
-    figPhoto.appendChild(btnSuppr);
-    figPhoto.appendChild(image);
-    modGallery.appendChild(figPhoto);
-
+    displayModalProject(id, imageUrl, title);
 }
 
 

@@ -100,8 +100,7 @@
         top:50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 95%;
-        max-width:500px;
+        max-width:630px;
         min-width: 300px;
         background-color: white;
         padding-top: 20px;
@@ -126,17 +125,20 @@
 
     &__title {
         margin-top: 20px;
+        font-size: 20px;
+        font-weight: 400;
     }
 
     // Gallery of projects on the first modal
     &__gallery {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 78px 78px 78px 78px 78px;
         gap: 15px 5px;
         padding: 0px 10px 0 35px;
-        overflow-y: scroll;
+        //overflow-y: scroll;
         width: 70%;
         margin-top: 20px;
+        height: 367px;
     }
 
     &__card {
@@ -174,7 +176,7 @@
 #modal1 {
 
     // Garbage icon
-    i {
+    .fa-trash-can {
         color: white;
     }
     .submitBorder {
@@ -235,6 +237,7 @@
 	cursor: pointer;
     font-size: 10px;
     font-weight: bold;
+    font-size: 16px;
 }
 
 // First field of the form

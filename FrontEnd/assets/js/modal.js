@@ -1,4 +1,4 @@
-import {projects, categories, divGallery, displayProject }  from "./script.js"
+import {projects, categories, displayProject }  from "./script.js"
 
 
 // Banner & buttons creation
@@ -204,19 +204,23 @@ iconRetour.addEventListener("click", function(e) {
 
 // Function to remove a project
 async function suppressionPhoto(id, btn) {
-    const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${sessionStorage.getItem("userToken")}`}
-    });
+    if(confirm("Voulez-vous supprimer cette photo ?")) {
 
-    if (suppResponse.status != 200) {
-        console.error(suppResponse.status);
+        const suppResponse = await fetch(`http://localhost:5678/api/works/${id}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${sessionStorage.getItem("userToken")}`}
+        });
+
+        if (suppResponse.status != 200) {
+            console.error(suppResponse.status);
+        }
+
+        // Remove items in the two gallery (projects and first modal) without reloading
+        btn.parentElement.remove();
+        let figToSupp = document.querySelector(`.gallery [data-id="${id}"]`);
+        figToSupp.remove();
+
     }
-
-    // Remove items in the two gallery (projects and first modal) without reloading
-    btn.parentElement.remove();
-    let figToSupp = document.querySelector(`.gallery [data-id="${id}"]`);
-    figToSupp.remove();
 }
 
 

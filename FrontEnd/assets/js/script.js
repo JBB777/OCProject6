@@ -90,5 +90,5 @@ if (window.sessionStorage.getItem("userToken") != null) {
 
 
  export {
-    projects, categories, divGallery, displayProject
+    projects, categories, displayProject
  }

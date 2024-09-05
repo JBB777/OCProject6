@@ -17,12 +17,17 @@ document.getElementById("formLogin").addEventListener('submit', async function(l
             body: chargeUserAuth
         });
 
-        if (fetchResponse.status == 401) {
-            error.innerHTML = "Mot de passe incorrect";
-            throw new Error("MdP incorrect");
-        }
-        if (fetchResponse.status == 404) {
-            error.innerHTML = "Adresse mail incorrect";
+        // if (fetchResponse.status == 401) {
+        //     error.innerHTML = "Mot de passe incorrect";
+        //     throw new Error("MdP incorrect");
+        // }
+        // if (fetchResponse.status == 404) {
+        //     error.innerHTML = "Adresse mail incorrect";
+        //     throw new Error("User not found");
+        // }
+
+        if (fetchResponse.status == 401 || fetchResponse.status == 404) {
+            error.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
             throw new Error("User not found");
         }
         

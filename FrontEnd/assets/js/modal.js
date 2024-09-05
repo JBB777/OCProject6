@@ -31,13 +31,12 @@ function createEditModeBanner() {
 
     iconPortfolio.classList.add("fa-regular", "fa-pen-to-square");
     iconPortfolio.style.color = "black";
-    iconPortfolio.style.margin = "0 0 2em 1em";
     modalLink.appendChild(iconPortfolio);
     modalLink.href = 'modal';
     modalLink.classList.add('btnModale');
     modalLink.classList.add('modal-trigger');
     spanPortfolio.innerText = "modifier";
-    spanPortfolio.style.marginBottom = "2em";
+    titrePortfolio.style.marginBottom = "0";
     divTitre.appendChild(titrePortfolio);
     divTitre.appendChild(modalLink);
     divTitre.appendChild(spanPortfolio);
